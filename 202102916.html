@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT E-Portfolio - Mxolisi Lukhele</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: rgb(77, 85, 121);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-image: url('https://i.postimg.cc/NjDwppmX/circuits-blue-red-gradient-digital-background-23-2148821701.avif');
+            background-size: cover;
+            background-position: center;
+        }
+
+        header {
+            background-color: gray;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        #menu-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: block;
+            background-color: #8B4513;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Profile Picture next to the hamburger menu */
+        #profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            top: 15px;
+            right: 90px; /* Adjusted position */
+            border: 2px solid white;
+        }
+
+        #content-wrapper {
+            display: flex;
+            width: 100%;
+            padding-top: 60px;
+            justify-content: flex-start;
+        }
+
+        nav {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 2px solid #8B4513;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            height: 100%;
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 1;
+        }
+
+        nav.active {
+            left: 0;
+        }
+
+        nav h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: green;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: green;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            margin-left: 250px;
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Contact Info at the bottom-right corner */
+        .contact-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #8B4513;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            z-index: 10;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        section {
+            display: none;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #8B4513;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section.active {
+            display: block;
+        }
+
+        section h2 {
+            font-size: 24px;
+            color: green;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #8B4513;
+            resize: vertical;
+        }
+
+        .rubric ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .rubric li {
+            margin: 10px 0;
+        }
+
+        .multiple-choice input {
+            margin-right: 10px;
+        }
+
+        .drag-and-drop {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .drag-item {
+            background-color: #f4f4f4;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #8B4513;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .drop-zone {
+            background-color: #e0e0e0;
+            border: 1px dashed #8B4513;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        .drop-zone.dragover {
+            background-color: #b3b3b3;
+        }
+
+        .submit-button {
+            background-color: #8B4513;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                left: -100%;
+                top: 0;
+                border-right: none;
+                border-bottom: 2px solid #8B4513;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            main {
+                padding: 10px;
+                margin-left: 0;
+            }
+
+            #menu-toggle {
+                top: 20px;
+                right: 20px;
+                font-size: 20px;
+            }
+
+            #profile-pic {
+                width: 30px;
+                height: 30px;
+                top: 20px;
+                right: 50px;
+            }
+
+            .contact-info {
+                bottom: 20px;
+                right: 20px;
+                width: auto;
+                text-align: center;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ICT e-Portfolio: Mxolisi Lukhele; student ID: 202102916</h1>
+        <img id="profile-pic" src="https://i.postimg.cc/W1ydpGVM/mxo.jpg" alt="Profile Picture">
+        <div id="menu-toggle" onclick="toggleMenu()">☰ Menu</div>
+    </header>
+
+    <!-- Contact Info Section -->
+    <div class="contact-info">
+        <p>Contact Me:<br>Email: mxolisilukhele70@gmail.com</p>
+    </div>
+
+    <div id="content-wrapper">
+        <nav id="side-menu">
+            <ul>
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('profile')">Profile</a></li>
+                <li><a href="#" onclick="showSection('learning-materials')">Sample Learning Materials</a></li>
+                <li><a href="#" onclick="showSection('multimedia')">Multimedia</a></li>
+                <li><a href="#" onclick="showSection('assessment')">Assessment</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="home">
+                <h2>Home</h2>
+                <p><i>Welcome to my E-Portfolio! My name is Mxolisi Lukhele, I am studying for a BSc in Computer Science at the University of Eswatini, particularly passionate about ICT education. I am additionally pursuing my CCNA2 certification and I have also taken an Introduction to Cybersecurity course.</i></p>
+                <p><i>As someone who loves technology, especially the aspects of networking and cyber security, these certifications make perfect sense.</i></p>
+                <p>This e-portfolio contains a compilation of my educational accomplishments, certifications, competencies, and work experiences. I have a keen interest in web development and cybersecurity, and I am in the process of acquiring more knowledge concerning the two fields. I am a firm believer that technology can change the world and I look forward to being a part of the change.</p>
+                <h3>Aim of this E-Portfolio</h3>
+                <p>The aim of this portfolio is to showcase my growth and development as an ICT professional and my engagement with various aspects of Information and Communication Technology.</p>
+            </section>
+
+            <section id="profile">
+                <h2>Profile</h2>
+                <p><strong>Name:</strong> Mxolisi Lukhele</p>
+                <p><strong>Program:</strong> BSc in Computer Science education</p>
+                <p><strong>Certifications:</strong></p>
+                <ul>
+                    <li>CCNA2 Certification (Cisco Certified Network Associate) <i>in progress</i></li>
+                    <li><a href="https://drive.google.com/file/d/16W-789S1ZyU0Aeg_SfpTEn1Fw1qZnjXS/view?usp=drive_link" target="_blank">Introduction to Cybersecurity</a></li>
+
+                </ul>
+                <p><strong>Skills:</strong></p>
+                <ul>
+                    <li>Networking (including routing, switching, and network protocols)</li>
+                    <li>Web Development (HTML, CSS, JavaScript)</li>
+                    <li>Cybersecurity Awareness and Best Practices</li>
+                    <li>Technical Support and Troubleshooting</li>
+                    <li>Problem Solving and Critical Thinking</li>
+                </ul>
+                <p><strong>Interests:</strong></p>
+                <ul>
+                    <li>Web Development</li>
+                    <li>Networking and Cybersecurity</li>
+                    <li>Educational Technology</li>
+                    <li>IoT and Smart Technologies</li>
+                </ul>
+                <p><strong>Personal Statement:</strong></p>
+                <p>
+                    As a passionate Computer Science student, I am eager to expand my knowledge and grow within the fields of networking and cybersecurity. Throughout my academic journey, I have developed a deep interest in how technology, specifically communication media, plays a vital role in our daily lives and in the broader context of education. My current studies, including my pursuit of certifications such as CCNA2 and Introduction to Cybersecurity, reflect my dedication to mastering these critical areas. I believe that networking and cybersecurity are fundamental pillars that enable the effective functioning of our digital world, and I am committed to honing my expertise in these fields.
+                </p>
+                <p>In addition to my technical training, I am equally passionate about sharing my knowledge with others. I believe that education is a powerful tool for shaping the future, and as part of my e-portfolio, I am excited to teach others about communication media. Communication media is central to how we connect, share information, and interact in the digital age. By exploring various forms of communication, from traditional print media to modern digital platforms, I aim to help others understand the nuances of each type and how they can effectively use these tools in both personal and professional contexts. I will delve into topics like the characteristics of different communication media, their impact on society, and how they shape the way we access and distribute information.</p>
+                <p>I continuously strive to improve my skills and stay updated with the latest trends in technology. My goal is to combine my technical knowledge with a strong understanding of educational practices, not only to contribute positively to the ICT community but also to empower others with the skills they need to thrive in an increasingly digital world. I am dedicated to fostering an environment where learning is engaging, practical, and rooted in real-world applications. By blending my passion for technology with my desire to teach, I aim to inspire and equip future ICT professionals and educators with the tools to succeed in an ever-evolving digital landscape.
+
+                </p>
+            </section>
+            
+
+            <section id="learning-materials">
+                <h2>Sample Learning Materials</h2>
+                <h3>Links to the materials</h3>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1TSJ7BaWitkc25r6XQXpUtdxnpwIYcymT/view?usp=drive_link" target="_blank">Lesson Plan</a></li>
+                    <li><a href="https://drive.google.com/file/d/19ucU3YOro4IeBIil6pMF0ubXzR1Uug_7/view?usp=drive_link" target="_blank">Scheme of Work</a></li>
+                    <li><a href="https://drive.google.com/file/d/1cbfCGytDrRbhGBZJcikNVJzetWa7J8Xr/view?usp=drive_link" target="_blank">Syllabus</a></li>
+                    <li><a href="https://drive.google.com/file/d/1vXzWiivKzq-z8k4c1Cg5lHUUNcSVN7cN/view?usp=drive_link" target="_blank">Notes</a></li>
+                </ul>
+            </section>
+
+            <section id="multimedia">
+                <h2>Multimedia</h2>
+                <h3>Video Resources:</h3>
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ABC123" target="_blank">Introduction to Communication Media</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=XYZ456" target="_blank">Characteristics of Communication Media</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=bMyuUCxwARw&t=32s" target="_blank">lesson vedio on broadcast media.</a>
+                    <li><a href="https://www.youtube.com/watch?v=KBXvDNgDzsU" target="_blank">lesson vedio on digital media.  </ul>
+                    <li><a href="https://www.youtube.com/watch?v=z-hIIvYAZsc" target="_blank">lesson vedio on communication media.
+                    </section>
+
+            <section id="assessment">
+                <h2>Assessment</h2>
+                <h3>Multiple Choice Question 1:</h3>
+                <p>Which of the following is a type of communication media?</p>
+                <div class="multiple-choice">
+                    <input type="radio" id="mcq1a" name="mcq1" value="a">
+                    <label for="mcq1a">Print Media</label><br>
+                    <input type="radio" id="mcq1b" name="mcq1" value="b">
+                    <label for="mcq1b">Radio and Television</label><br>
+                    <input type="radio" id="mcq1c" name="mcq1" value="c">
+                    <label for="mcq1c">All of the above</label><br>
+                </div>
+
+                <h3>Multiple Choice Question 2:</h3>
+                <p>Which of the following is a characteristic of communication media?</p>
+                <div class="multiple-choice">
+                    <input type="radio" id="mcq2a" name="mcq2" value="a">
+                    <label for="mcq2a">Instantaneous Transmission</label><br>
+                    <input type="radio" id="mcq2b" name="mcq2" value="b">
+                    <label for="mcq2b">Can only be received by one individual</label><br>
+                    <input type="radio" id="mcq2c" name="mcq2" value="c">
+                    <label for="mcq2c">Limited Accessibility</label><br>
+                </div>
+
+                <h3>Drag and Drop Question:</h3>
+                <p>Match the types of communication media with their characteristics:</p>
+                <div class="drag-and-drop">
+                    <div class="drop-zone" id="zone1">Print Media</div>
+                    <div class="drop-zone" id="zone2">Electronic Media</div>
+                </div>
+                <div class="drag-item" id="item1" draggable="true">Newspapers, Magazines</div>
+                <div class="drag-item" id="item2" draggable="true">Television, Radio</div>
+
+                <h3>Rubric for Assessment</h3>
+                <div class="rubric">
+                    <ul>
+                        <li><strong>Level 1: Poor</strong> - The multimedia content is incomplete and lacks basic structure.</li>
+                        <li><strong>Level 2: Fair</strong> - The content is present but lacks cohesiveness and effective use of multimedia elements.</li>
+                        <li><strong>Level 3: Good</strong> - The content is well-structured, and the multimedia elements are used effectively.</li>
+                        <li><strong>Level 4: Excellent</strong> - The multimedia content is exceptional, with creative use of elements, well-designed structure, and comprehensive coverage.</li>
+                    </ul>
+                </div>
+
+                <button class="submit-button">Submit Assessment</button>
+            </section>
+        </main>
+    </div>
+     
+
+    <script>
+        // Toggle menu visibility
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Show a specific section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            // Close menu if on mobile or when any section is displayed
+            if (window.innerWidth <= 768 || sectionId) {
+                const menu = document.getElementById('side-menu');
+                menu.classList.remove('active');  // Ensure the menu hides automatically
+            }
+        }
+
+        // Show the Home section by default on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            showSection('home');
+        });
+
+        // Drag and Drop Functionality
+        const dragItems = document.querySelectorAll('.drag-item');
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        dragItems.forEach(item => {
+            item.addEventListener('dragstart', function (event) {
+                event.dataTransfer.setData('text', event.target.id);
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', function (event) {
+                event.preventDefault();
+            });
+
+            zone.addEventListener('drop', function (event) {
+                event.preventDefault();
+                const data = event.dataTransfer.getData('text');
+                const droppedItem = document.getElementById(data);
+                zone.appendChild(droppedItem);
+            });
+        });
+    </script>
+</body>
+</html>
